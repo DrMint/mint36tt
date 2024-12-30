@@ -1,0 +1,1 @@
+/home/deck/custom-keyboard/openSCAD/switches/kailh-choc-v1.scad

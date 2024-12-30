@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "node generate.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.7"
+  },
+  "dependencies": {
+    "@flatten-js/core": "^1.6.2"
+  }
+}
