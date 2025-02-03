@@ -2,31 +2,39 @@
 
 ![](1.png)
 
-
 ## Design goals
 
 1. Ergonomic
-    - Split
-    - Reduced number of keys
-    - Reduced key spacing
-    - Splay
-    
+   - Split
+   - Reduced number of keys
+   - Reduced key spacing
+   - Splay
 2. On-the-go
-    - Low profile
-    - Silent
-    - Small footprint
-    - key protection
-    - Light
-    - USB-C
+
+   - Low profile
+   - Silent
+   - Small footprint
+   - key protection
+   - Light
+   - USB-C
 
 3. Sourceable
-    - Open source hardware
-    - 3D printable (FDM)
-    - Common components
-    - Hot swappable board and switches
-    - Reasonably cheap
+   - Open source hardware
+   - 3D printable (FDM)
+   - Common components
+   - Hot swappable board and switches
+   - Reasonably cheap
 
 ![](2.png)
+
+_The two halves combines together using magnets to transform into its own carry case. This prevent damage to the keys during transport and protect the keyboard from dust._
+
+Physical sizes for one half:
+
+**Width**: 118.5mm  
+**Height**: 90.5mm  
+**Thickness**: 14.8mm
+**Weight**: 110g (wired version)
 
 ## Switches
 
@@ -55,32 +63,35 @@ Choosen microcontroller: **[Seeed Studio XIAO RP2040](https://www.seeedstudio.co
 ![](exploded-view.png)
 
 ### Common for either version
+
 - Left and right PCBs
 - 4 × 7 pin headers
 - 36 × 1N4148W SOD123 diodes
 - 36 × Chocfox CFX caps, including:
-    - 30 × 1U Chocfox CFX caps
-    - 2 × 1.25U Chocfox CFX caps
-    - 4 × 1.5U Chocfox CFX caps
-- 36 × Kailh Choc switches 
-- 36 × Kailh Choc Hot Swap Sockets (recommended)
-- 8 × Rubber feet (Ø 8mm × 3mm) (recommended)
+  - 30 × 1U Chocfox CFX caps
+  - 2 × 1.25U Chocfox CFX caps
+  - 4 × 1.5U Chocfox CFX caps
+- 36 × Kailh Choc switches
+- 36 × Kailh Choc Hot Swap Sockets
 - 1 × USB-C cable
 
 ### Specific for the wireless version
+
 - 2 × Seeed Studio XIAO nRF52840
 - 2 × 601818 LiPo 3.7V 170mAh (18mm × 20mm × 6mm)
 - 2 × MSK12C02 on/off slide switch
 
 ### Specific for the wired version
+
 - 2 × Seeed Studio XIAO RP2040
 - 1 × TRRS cable
 - 2 × TRRS jacks PCB mount (MJ-4PP-9 or PJ320A)
 
 ### With the case (recommended):
+
 - Left and right upper cases
 - Left and right lower cases
-- 2 × reversible plates (optional)
+- Left and right plates (optional)
 - 8 × N52 neodymium magnet (cylinder-shaped, Ø 5mm × 5mm) (recommended)
-- 16 × M2 countersunk screws (Ø 2mm × 6mm)
-- 8 × M2 standoffs (Ø 2mm × 10-12mm)
+- 20 × M2 countersunk screws (Ø 2mm × 5mm)
+- 10 × M2 standoffs (Ø 2mm × 9mm)

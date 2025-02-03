@@ -9,7 +9,7 @@ include <./components/cfx-caps.scad>
 
 
 /* [3D printing] */
-kerf = 0.50;
+kerf = 0.1;
 
 /* [Keycaps & switches] */
 Enable_switches = true;
@@ -26,7 +26,7 @@ Shell_color = "#555555";
 /* [Upper shell] */
 Enable_upper_shell = true;
 Upper_shell_thickness = 2.5;
-Upper_shell_height = 8.8;
+Upper_shell_height = 8.9;
 Enable_magnets = true;
 Upper_shell_magnet_thickness = 0.5;
 Magnet_height = 5.0;
@@ -35,12 +35,6 @@ Magnet_diameter = 5.0;
 /* [Lower shell] */
 Enable_lower_shell = true;
 Lower_shell_thickness = 1.8;
-
-/* [Rubber feet] */
-Enable_rubber_feet = true;
-Rubber_diameter = 8.0;
-Rubber_height = 2.5;
-Rubber_sinking = 2.5;
 
 /* [Plate] */
 Enable_plate = true;
@@ -59,7 +53,7 @@ Screw_spacer_radius = 3.1/2;
 Enable_microcontroller = true;
 Micro_size = [17.8, 21, 1.26];
 Micro_size_with_USB = 22.7;
-Micro_position = [-68, 7.75, -1];
+Micro_position = [-67.6, 6.4, -1];
 
 /* [Battery] */
 Enable_battery = true;
@@ -71,13 +65,13 @@ Enable_PCB = true;
 PCB_thickness = 1.6;
 Enable_sockets = true;
 Enable_TTRS = true;
-TTRS_position = [28.35, 12.5, -5.2];
+TTRS_position = [28.8, 12.5, -5.2];
 
 /* [Debug] */
-Debug_splay = 0.0; // [0:1:32]
+Debug_splay = 32.0; // [0:1:32]
 Debug_text_distance = 70;
 Debug_text_shift = 15;
-Enable_debug_text = false;
+Enable_debug_text = true;
 
 
 module keys(withoutThumb=false, cutout=false, batteryCutout=false) {
@@ -110,9 +104,6 @@ module keys(withoutThumb=false, cutout=false, batteryCutout=false) {
         if (cutout) translate([ku, ku / 2]) rotate(-5) capSize(16.8, 16.8) children();
         if (cutout) translate([ku / 2, 0]) capSize(16.8, 16.8) children();
         if (batteryCutout) translate([0, -ku * 2]) capSize(16.8, 16.8) children();
-        if (batteryCutout) translate([-ku, -ku]) capSize(16.8, 16.8) children();
-        if (batteryCutout) translate([-ku, 0]) capSize(16.8, 16.8) children();
-        if (batteryCutout) translate([-ku, ku]) capSize(16.8, 16.8) children();
         if (batteryCutout) translate([ku, ku]) capSize(16.8, 16.8) children();
         translate([0, ku]) capSize(16.8, 16.8) capColor(Keycap_color) children();
         translate([0, 0]) capSize(16.8, 16.8) capColor(Keycap_color) children();
@@ -121,23 +112,24 @@ module keys(withoutThumb=false, cutout=false, batteryCutout=false) {
     
     if (!withoutThumb) rotate(0) translate([ku, -35.65 - gap]) {
         if (cutout) rotate(45) translate([5, 0]) capSize(16.8, 16.8) children();
-        translate([ku, -5.475]) capSize(21.35, 16.8) rotate(-90) capColor(Thumb_cluster_color) children();
+        translate([ku, -5.475]) capSize(21.35, 16.8) rotate(90) capColor(Thumb_cluster_color) children();
         translate([0, -3.1]) capSize(26.1, 16.8) rotate(90) capColor(Thumb_cluster_color) children();
         translate([-ku, -3.1]) capSize(26.1, 16.8) rotate(90) capColor(Thumb_cluster_color) children();
     }
 }
 
 module screwPositions() {
-    translate([Shell_position.x + Shell_size.x - Screw_hole_radius * 2 - Screw_hole_distance, Shell_position.y + Shell_size.y - Screw_hole_radius * 2 - Screw_hole_distance]) children();
-    translate([Shell_position.x + Shell_size.x - Screw_hole_radius * 2 - Screw_hole_distance, -26.9 + Screw_hole_distance]) children();
-    translate([Shell_position.x + Screw_hole_radius * 2 + Screw_hole_distance, Shell_position.y + Screw_hole_radius * 2 + Screw_hole_distance]) children();
-    translate([Micro_position.x + Micro_size.x + 0.1 + Screw_hole_distance, Shell_position.y + Shell_size.y - Screw_hole_radius * 2 - Screw_hole_distance]) children();
+    translate([36.5, 10]) children();
+    translate([36.5, -25]) children();
+    translate([-67, -49.5]) children();
+    translate([-36, 24]) children();
+    translate([-13, -30]) children();
 }
 
 module magnetPositions() {
-    translate([34, -1]) children();
-    translate([-16.7, -30]) children();
-    translate([-41, 24]) children();
+    translate([34, 4]) children();
+    translate([-19, -29]) children();
+    translate([-65, 1]) children();
     translate([-65, -40]) children();
 }
 
@@ -229,7 +221,7 @@ module caps() {
 }
 
 module ioCutouts() {
-    translate([Micro_position.x, Micro_position.y, 1.5]) translate([4.5, -1.5 + Micro_size.y + (Micro_size_with_USB - Micro_size.y), -1]) rotate([90]) linear_extrude(height = 7.4)  offset(r=1.6 + kerf * 2) square([6, 0.3]);
+    translate([Micro_position.x, Micro_position.y, 1.5]) translate([4.5, Micro_size.y + (Micro_size_with_USB - Micro_size.y), -1]) rotate([90]) linear_extrude(height = 7.4)  offset(r=1.6 + kerf * 2) square([6, 0.3]);
     
     translate([TTRS_position.x - 1.32, TTRS_position.y, 2.2]) translate([4.5, -1.5 + Micro_size.y + (Micro_size_with_USB - Micro_size.y), -1.9]) rotate([90]) linear_extrude(height = 7.4)  offset(r=2.5 + kerf * 2) square([0.1, 0.1]);
 }
@@ -237,7 +229,7 @@ module ioCutouts() {
 module upperShell() {
     translate([0, 0, Debug_splay * 3.5]) {
         color(Shell_color) difference() {
-             translate([0, 0, 0]) linear_extrude(Upper_shell_height, convexity=10)  difference() {
+             linear_extrude(Upper_shell_height, convexity=10)  difference() {
                 offset(r=1) union() {
                     keys(withoutThumb=true) offset(delta=Wall_thickness) cap_2d();
                     translate(Shell_position) square(Shell_size);
@@ -247,20 +239,19 @@ module upperShell() {
                 screwPositions() circle(Screw_hole_radius + kerf / 2);
             }
             
-            translate([0, 0, -zshift]) linear_extrude(Upper_shell_height - Upper_shell_magnet_thickness) magnetPositions() circle(Magnet_diameter / 2 + kerf);
+            translate([0, 0, -zshift]) linear_extrude(Upper_shell_height - Upper_shell_magnet_thickness) magnetPositions() circle(Magnet_diameter / 2 + kerf * 3);
             
             translate([0, 0, -zshift]) linear_extrude(Upper_shell_height - Upper_shell_thickness) offset(delta=kerf / 2) upperShellEmptySpaces();
             
             translate([0, 0, Upper_shell_height + zshift - Countersink_height]) screwPositions() cylinder(Countersink_height, Countersink_diameter / 2 + kerf, Countersink_diameter / 2 + kerf);
             
-            translate([0, 0, -zshift]) screwPositions() cylinder(Upper_shell_height - Upper_shell_thickness, Screw_spacer_radius + kerf, Screw_spacer_radius + kerf);
+            translate([0, 0, -zshift]) screwPositions() cylinder(Upper_shell_height - Upper_shell_thickness, Screw_spacer_radius + kerf * 3, Screw_spacer_radius + kerf * 3);
             
             ioCutouts();
-            
         }
         color(Shell_color) translate([0, 0, Upper_shell_height - Upper_shell_magnet_thickness - Magnet_height]) linear_extrude(Magnet_height) difference() {
-            magnetPositions() circle(Magnet_diameter / 2 + 1);
-            magnetPositions() circle(Magnet_diameter / 2 + kerf);
+            magnetPositions() circle(Magnet_diameter / 2 + 1 + kerf * 3);
+            magnetPositions() circle(Magnet_diameter / 2 + kerf * 3);
         }
         if (Enable_debug_text) color("#888888") rotate([90, 0, 0]) translate([Debug_text_distance, Debug_text_shift]) text("Upper shell", size=8);
     }
@@ -306,20 +297,34 @@ module microController() {
 module plate(flip) {
     translate([0, 0, -Debug_splay * 1]) {
         color(Shell_color) translate([0, 0, -Plate_thickness]) difference() {
-            linear_extrude(Plate_thickness, convexity=10) offset(delta=-kerf) difference() {
+            linear_extrude(Plate_thickness, convexity=10) offset(delta=-0.5 /* KERF */) difference() {
                 offset(1 - Wall_thickness) union() {
                     keys(withoutThumb=true) offset(delta=Wall_thickness) cap_2d();
                     translate(Shell_position) square(Shell_size);
                     translate(Shell_position) square(Plate_thumb_size);
                 }
-                screwPositions() circle(Screw_spacer_radius + kerf * 3);
+                screwPositions() circle(Screw_spacer_radius + 0.5 /* KERF */);
                 upperShellEmptySpaces();
+                rotate(8) translate([-52.5, 26.74]) square(20, 10);
+                translate([-43.96, 24]) square(10, 10);
             }
             linear_extrude(Plate_thickness + zshift) keys() square(13.80 + kerf, center=true);
             translate([0, 0, -zshift]) linear_extrude(0.9) keys() square(14.50 + kerf, center=true);
         }
         if (Enable_debug_text) color("#888888") rotate([90, 0, 0]) translate([Debug_text_distance, -2 + Debug_text_shift]) text("Plate", size=8);
     }
+}
+
+module bottomPCBCutouts(flip) {
+    if (flip) {
+        offset(1 + kerf) translate([7.38, -2]) translate([22.5, 21.3]) square([0.1, 10 - 1.8], center=true);
+        offset(1 + kerf) translate([11.6, -7]) translate([22.5, 21.3]) square([0.1, 3 - 1.8], center=true);
+    } else {
+        offset(1 + kerf) translate([11.6, -2]) translate([22.5, 21.3]) square([0.1, 10 - 1.8], center=true);
+        offset(1 + kerf) translate([7.38, -7]) translate([22.5, 21.3]) square([0.1, 3 - 1.8], center=true);
+    }
+    offset(1 + kerf) translate([Micro_position.x - 0.6, Micro_position.y - 0.6]) square([0.1, 21 - 1.8]);
+    offset(1 + kerf) translate([Micro_position.x - 2.5 + Micro_size.x, Micro_position.y - 0.6]) square([0.1, 21 - 1.8]);
 }
 
 module lowerShell(flip) {
@@ -340,7 +345,6 @@ module lowerShell(flip) {
                 }
                 translate([0, 0, + Plate_thickness + PCB_thickness + Lower_shell_thickness]) ioCutouts();
             }
-             
        
             color(Shell_color) difference() {
                 linear_extrude(Lower_shell_thickness, convexity=10) difference() {
@@ -349,29 +353,23 @@ module lowerShell(flip) {
                         translate(Shell_position) square(Shell_size);
                         translate(Shell_position) square(Plate_thumb_size);
                     }
-                    offset(kerf) keys() condMirror(flip) {
-                        projection() hotswap();
+                    offset(0.2 /* KERF */) keys() condMirror(flip) {
                         circle(3.4 / 2);
                         translate([5.5, 0]) circle(1.9 / 2);
                         translate([-5.5, 0]) circle(1.9 / 2);
+                        translate([0, -4]) square([5, 2], center=true);
                     }
+                    offset(0.5 /* KERF */) keys() condMirror(flip) {
+                        projection() hotswap();
+                    }
+                    
+                    bottomPCBCutouts(flip);
                     screwPositions() circle(Screw_hole_radius + kerf / 2);
                 }
                 translate([0, 0, -zshift]) screwPositions() cylinder(Countersink_height, Countersink_diameter / 2 + kerf, Countersink_diameter / 2 + kerf);
-                translate([0, 0, -zshift - Rubber_height + Rubber_sinking]) linear_extrude(Rubber_height) offset(kerf) rubberFeetPositions() circle(Rubber_diameter / 2);
             }
             if (Enable_debug_text) color("#888888") rotate([90, 0, 0]) translate([Debug_text_distance, -4 + Debug_text_shift]) text("Lower shell", size=8);
         }
-        
-        
-    }
-}
-                
-
-module rubberFeet() {
-    translate([0, 0, - Debug_splay * 4]) {
-        color("#FFFFFF66") translate([0, 0, -Plate_thickness - PCB_thickness - Lower_shell_thickness + zshift + min(Rubber_sinking, Lower_shell_thickness)]) rubberFeetPositions() mirror([0, 0, 1]) linear_extrude(Rubber_height, scale=0.85) circle(Rubber_diameter / 2);
-        if (Enable_debug_text) color("#CCCCCC") rotate([90, 0, 0]) translate([Debug_text_distance, -14 + Debug_text_shift]) text("Rubber feet", size=5);
     }
 }
 
@@ -383,7 +381,7 @@ module PCB() {
                 translate(Shell_position) square(Shell_size);
                 translate(Shell_position) square(Plate_thumb_size);
             }
-            screwPositions() circle(Screw_spacer_radius + kerf);
+            screwPositions() circle(Screw_spacer_radius + kerf * 0.7);
             keys() rotate(180) {
                 circle(3.4 / 2);
                 translate([-Pin_gap / 2, 0]) circle(1.9 / 2);
@@ -437,16 +435,15 @@ module half(flip=false) {
     condMirror(flip) {
         if (Enable_switches) switches(flip);
         if (Enable_caps) caps();
-        if (Enable_upper_shell) upperShell();
+        if (Enable_upper_shell) rotate([0, $preview ? 0 : 180]) upperShell();
         if (Enable_magnets) magnets();
         if (Enable_battery) battery();
         if (Enable_microcontroller) microController();
-        if (Enable_plate) plate(flip);
+        if (Enable_plate) rotate([0, $preview ? 0 : 180]) plate(flip);
         if (Enable_lower_shell) lowerShell(flip);
         if (Enable_PCB) PCB();
         if (Enable_sockets) sockets(flip);
         if (Enable_screws) screws();
-        if (Enable_rubber_feet) rubberFeet();
         if (Enable_TTRS) ttrs();
         debug();
     } 
